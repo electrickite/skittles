@@ -18,12 +18,12 @@
 
   <div class="field">
     <%= form.label :result %>
-    <%= form.number_field :result, id: :game_result %>
+    <%= form.select :result, game.class.results.keys.map {|key| [key.humanize, key]}, include_blank: true, id: :game_result %>
   </div>
 
   <div class="field">
     <%= form.label :completed_at %>
-    <%= form.datetime_select :completed_at, id: :game_completed_at %>
+    <%= form.datetime_select :completed_at, include_blank: true, id: :game_completed_at %>
   </div>
 
   <div class="actions">

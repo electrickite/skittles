@@ -23,11 +23,11 @@ ActiveRecord::Schema.define(version: 20170610025128) do
 
   create_table "moves", force: :cascade do |t|
     t.integer "game_id"
-    t.integer "number"
-    t.integer "color"
-    t.integer "piece"
-    t.string "departure"
-    t.string "destination"
+    t.integer "number", default: 0, null: false
+    t.integer "color", default: 0, null: false
+    t.integer "piece", default: 0, null: false
+    t.string "departure", null: false
+    t.string "destination", null: false
     t.boolean "capture"
     t.integer "castle"
     t.integer "promotion"
@@ -35,6 +35,7 @@ ActiveRecord::Schema.define(version: 20170610025128) do
     t.boolean "mate"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["game_id", "number"], name: "index_moves_on_game_id_and_number", unique: true
     t.index ["game_id"], name: "index_moves_on_game_id"
   end
 

@@ -13,7 +13,7 @@
 
   <div class="field">
     <%= form.label :game_id %>
-    <%= form.text_field :game_id, id: :move_game_id %>
+    <%= form.collection_select :game_id, Game.all, :id, :to_s, id: :move_game_id %>
   </div>
 
   <div class="field">
@@ -23,12 +23,12 @@
 
   <div class="field">
     <%= form.label :color %>
-    <%= form.number_field :color, id: :move_color %>
+    <%= form.select :color, move.class.colors.keys.map {|key| [key.humanize, key]}, id: :move_color %>
   </div>
 
   <div class="field">
     <%= form.label :piece %>
-    <%= form.number_field :piece, id: :move_piece %>
+    <%= form.select :piece, move.class.pieces.keys.map {|key| [key.humanize, key]}, id: :move_piece %>
   </div>
 
   <div class="field">
@@ -48,12 +48,12 @@
 
   <div class="field">
     <%= form.label :castle %>
-    <%= form.number_field :castle, id: :move_castle %>
+    <%= form.select :castle, move.class.castles.keys.map {|key| [key.humanize, key]}, include_blank: true, id: :move_castle %>
   </div>
 
   <div class="field">
     <%= form.label :promotion %>
-    <%= form.number_field :promotion, id: :move_promotion %>
+    <%= form.select :promotion, move.class.promotions.keys.map {|key| [key.humanize, key]}, include_blank: true, id: :move_promotion %>
   </div>
 
   <div class="field">

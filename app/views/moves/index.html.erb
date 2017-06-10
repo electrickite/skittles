@@ -1,0 +1,47 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Moves</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Game</th>
+      <th>Number</th>
+      <th>Color</th>
+      <th>Piece</th>
+      <th>Departure</th>
+      <th>Destination</th>
+      <th>Capture</th>
+      <th>Castle</th>
+      <th>Promotion</th>
+      <th>Check</th>
+      <th>Mate</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @moves.each do |move| %>
+      <tr>
+        <td><%= move.game %></td>
+        <td><%= move.number %></td>
+        <td><%= move.color %></td>
+        <td><%= move.piece %></td>
+        <td><%= move.departure %></td>
+        <td><%= move.destination %></td>
+        <td><%= move.capture %></td>
+        <td><%= move.castle %></td>
+        <td><%= move.promotion %></td>
+        <td><%= move.check %></td>
+        <td><%= move.mate %></td>
+        <td><%= link_to 'Show', move %></td>
+        <td><%= link_to 'Edit', edit_move_path(move) %></td>
+        <td><%= link_to 'Destroy', move, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Move', new_move_path %>

@@ -1,0 +1,59 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Game:</strong>
+  <%= @move.game %>
+</p>
+
+<p>
+  <strong>Number:</strong>
+  <%= @move.number %>
+</p>
+
+<p>
+  <strong>Color:</strong>
+  <%= @move.color %>
+</p>
+
+<p>
+  <strong>Piece:</strong>
+  <%= @move.piece %>
+</p>
+
+<p>
+  <strong>Departure:</strong>
+  <%= @move.departure %>
+</p>
+
+<p>
+  <strong>Destination:</strong>
+  <%= @move.destination %>
+</p>
+
+<p>
+  <strong>Capture:</strong>
+  <%= @move.capture %>
+</p>
+
+<p>
+  <strong>Castle:</strong>
+  <%= @move.castle %>
+</p>
+
+<p>
+  <strong>Promotion:</strong>
+  <%= @move.promotion %>
+</p>
+
+<p>
+  <strong>Check:</strong>
+  <%= @move.check %>
+</p>
+
+<p>
+  <strong>Mate:</strong>
+  <%= @move.mate %>
+</p>
+
+<%= link_to 'Edit', edit_move_path(@move) %> |
+<%= link_to 'Back', moves_path %>

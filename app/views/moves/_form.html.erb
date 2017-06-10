@@ -1,0 +1,72 @@
+<%= form_with(model: move, local: true) do |form| %>
+  <% if move.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(move.errors.count, "error") %> prohibited this move from being saved:</h2>
+
+      <ul>
+      <% move.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :game_id %>
+    <%= form.text_field :game_id, id: :move_game_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :number %>
+    <%= form.number_field :number, id: :move_number %>
+  </div>
+
+  <div class="field">
+    <%= form.label :color %>
+    <%= form.number_field :color, id: :move_color %>
+  </div>
+
+  <div class="field">
+    <%= form.label :piece %>
+    <%= form.number_field :piece, id: :move_piece %>
+  </div>
+
+  <div class="field">
+    <%= form.label :departure %>
+    <%= form.text_field :departure, id: :move_departure %>
+  </div>
+
+  <div class="field">
+    <%= form.label :destination %>
+    <%= form.text_field :destination, id: :move_destination %>
+  </div>
+
+  <div class="field">
+    <%= form.label :capture %>
+    <%= form.check_box :capture, id: :move_capture %>
+  </div>
+
+  <div class="field">
+    <%= form.label :castle %>
+    <%= form.number_field :castle, id: :move_castle %>
+  </div>
+
+  <div class="field">
+    <%= form.label :promotion %>
+    <%= form.number_field :promotion, id: :move_promotion %>
+  </div>
+
+  <div class="field">
+    <%= form.label :check %>
+    <%= form.check_box :check, id: :move_check %>
+  </div>
+
+  <div class="field">
+    <%= form.label :mate %>
+    <%= form.check_box :mate, id: :move_mate %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

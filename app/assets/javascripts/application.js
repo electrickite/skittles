@@ -10,6 +10,9 @@
 // Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
 // about supported directives.
 //
+//= require jquery
+//= require js-routes
 //= require rails-ujs
 //= require turbolinks
+//= require chessboard
 //= require_tree .

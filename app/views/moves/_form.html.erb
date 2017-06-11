@@ -17,11 +17,6 @@
   </div>
 
   <div class="field">
-    <%= form.label :number %>
-    <%= form.number_field :number, id: :move_number %>
-  </div>
-
-  <div class="field">
     <%= form.label :color %>
     <%= form.select :color, move.class.colors.keys.map {|key| [key.humanize, key]}, id: :move_color %>
   </div>

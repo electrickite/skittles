@@ -8,4 +8,14 @@ class Game < ApplicationRecord
   def to_s
     name || id
   end
+
+  def fenstring
+    pgn.positions.last.to_fen.to_s
+  end
+
+  private
+
+  def pgn
+    PGN::Game.new(moves.map(&:to_s))
+  end
 end

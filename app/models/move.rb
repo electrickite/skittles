@@ -17,6 +17,7 @@ class Move < ApplicationRecord
   validates :piece, inclusion: { in: pieces.keys }
   validates :castle, inclusion: { in: castles.keys }, allow_nil: true
   validates :promotion, inclusion: { in: promotions.keys }, allow_nil: true
+  validate :legal_move
 
   def to_s
     return 'O-O' if kingside?
@@ -48,5 +49,11 @@ class Move < ApplicationRecord
     return nil unless promotion
     promoted = promotion.to_s.split('_').first.to_sym
     ALGEBRAIC_PIECES[promoted]
+  end
+
+  def legal_move
+    game.board.move self.to_s
+  rescue Chess::IllegalMoveError
+    errors.add :base, "Illegal move"
   end
 end

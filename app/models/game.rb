@@ -13,9 +13,17 @@ class Game < ApplicationRecord
     pgn.positions.last.to_fen.to_s
   end
 
+  def to_a
+    moves.map(&:to_s)
+  end
+
+  def board
+    @board ||= Chess::Game.new(to_a)
+  end
+
   private
 
   def pgn
-    PGN::Game.new(moves.map(&:to_s))
+    PGN::Game.new(to_a)
   end
 end

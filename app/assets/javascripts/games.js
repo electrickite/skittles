@@ -33,8 +33,14 @@ function sendMove(source, target, piece, newPosition, oldPosition) {
       data: { move: { game_id: gameId, departure: source, destination: target, color: color, piece: piece } }
     }).done(function(msg) {
       // Do things...
-    }).fail(function() {
+    }).fail(function(data) {
       board.position(oldPosition);
+      if (data.responseJSON && data.responseJSON.base instanceof Array) {
+        var msg = data.responseJSON.base.join(', ');
+      } else {
+        var msg = 'Unkown error';
+      }
+      alert('Error: ' + msg);
     }).always(function() {
       boardLocked = false;
     });

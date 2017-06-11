@@ -16,7 +16,9 @@ gem 'jbuilder', '~> 2.5'
 
 gem 'jquery-rails'
 gem 'js-routes'
+gem 'dotenv-rails'
 gem 'pgn'
+gem 'chess'
 
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby

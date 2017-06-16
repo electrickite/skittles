@@ -49,6 +49,10 @@ class Game < ApplicationRecord
     end
   end
 
+  def current_move
+    moves.last
+  end
+
   private
 
   def game

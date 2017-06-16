@@ -4,6 +4,7 @@ function Game(el) {
   this.type = this.el.data('type');
   this.id = this.el.data('id');
   this.locked = false;
+  this.speed = 200;
   var self = this;
 
   if (this.type == 'game') {
@@ -13,6 +14,7 @@ function Game(el) {
         draggable: self.ongoing(game.result),
         pieceTheme: self.theme,
         showErrors: false,
+        moveSpeed: self.speed,
         onDragStart: self.dragCheck.bind(self),
         onDrop: self.sendMove.bind(self)
       });
@@ -34,7 +36,6 @@ Game.prototype.theme = '/images/chesspieces/wikipedia/{piece}.png';
 
 Game.prototype.initBoard = function(opts) {
   this.board = ChessBoard(this.el.attr('id'), opts);
-  console.log(this.board);
 };
 
 Game.prototype.getGame = function(callback) {
@@ -78,9 +79,15 @@ Game.prototype.sendMove = function(source, target, piece, newPosition, oldPositi
         $('.result-js').text(game.result);
         $('.completed_at-js').text(game.completed_at);
 
-        if (game.result == 'other') {
-          self.unlock();
-        }
+        setTimeout(function() {
+          if (game.current_move.checkmate) {
+            alert('Checkmate!');
+          } else if (game.current_move.check) {
+            alert('Check!');
+          }
+        }, self.speed);
+
+        if (!game.completed_at) { self.unlock(); }
       });
     }).fail(function(data) {
       self.board.position(oldPosition);

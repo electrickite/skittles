@@ -18,6 +18,8 @@ class Move < ApplicationRecord
   end
 
   delegate :insufficient_material?, :stalemate?, :checkmate?, :check?, to: :board
+  alias_method :check, :check?
+  alias_method :checkmate, :checkmate?
 
   def fenstring
     board.to_fen

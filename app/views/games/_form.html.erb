@@ -18,7 +18,7 @@
 
   <div class="field">
     <%= form.label :result %>
-    <%= form.select :result, game.class.results.keys.map {|key| [key.humanize, key]}, include_blank: true, id: :game_result %>
+    <%= form.select :result, game.class.results.keys.map {|key| [key.humanize, key]}, id: :game_result %>
   </div>
 
   <div class="field">

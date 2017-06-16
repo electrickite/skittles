@@ -1,16 +1,20 @@
 class Game < ApplicationRecord
+  RESULT_MAP = { '1-0' => 'white_win', '0-1' => 'black_win', '1/2-1/2' => 'draw', '*' => 'other'}.freeze
+
   has_many :moves, inverse_of: :game, dependent: :destroy
 
-  enum result: { white_win: 0, black_win: 1, draw: 2, other: 3 }
+  enum result: { other: 0, white_win: 1, black_win: 2, draw: 3 }
 
-  validates :result, inclusion: { in: results.keys }, allow_nil: true
+  validates :result, inclusion: { in: results.keys }
+
+  delegate :board, :over?, :status, :active_player, to: :game
 
   def to_s
     name || id
   end
 
   def fenstring
-    game.current.to_fen
+    board.to_fen
   end
 
   def normalize(move)
@@ -29,7 +33,12 @@ class Game < ApplicationRecord
   def update_board!
     @game = nil
     moves.reset
-    play_next if game.active_player == :black
+
+    if over?
+      end_game!
+    else
+      play_next if active_player == :black
+    end
   end
 
   def board_for(move)
@@ -51,11 +60,15 @@ class Game < ApplicationRecord
   end
 
   def play_next
-    moves.create(game_id: id, color: game.active_player, notation: best_move)
+    moves.create(game_id: id, color: active_player, notation: best_move)
   end
 
   def best_move
     result = engine.analyze(fenstring, depth: 12).split("\n").last
     result.split(' ')[1]
+  end
+
+  def end_game!
+    update result: RESULT_MAP[game.result], completed_at: Time.zone.now
   end
 end

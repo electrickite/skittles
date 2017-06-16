@@ -1,5 +1,4 @@
 class Move < ApplicationRecord
-  ALGEBRAIC_PIECES = { pawn: '', bishop: 'B', knight: 'N', rook: 'R', queen: 'Q', king: 'K' }.freeze
   belongs_to :game, inverse_of: :moves
 
   before_create :set_number

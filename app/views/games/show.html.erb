@@ -7,12 +7,12 @@
 
 <p>
   <strong>Result:</strong>
-  <%= @game.result %>
+  <span class="result-js"><%= @game.result %></span>
 </p>
 
 <p>
   <strong>Completed at:</strong>
-  <%= @game.completed_at %>
+  <span class="completed_at-js"><%= @game.completed_at %></span>
 </p>
 
 <div id="board" data-type="game" data-id="<%= @game.id %>" style="width: 400px"></div>

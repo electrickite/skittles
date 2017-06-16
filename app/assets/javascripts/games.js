@@ -10,7 +10,7 @@ function Game(el) {
     this.getGame(function(game) {
       self.initBoard({
         position: game.fenstring,
-        draggable: true,
+        draggable: self.ongoing(game.result),
         pieceTheme: self.theme,
         showErrors: false,
         onDragStart: self.dragCheck.bind(self),
@@ -34,6 +34,7 @@ Game.prototype.theme = '/images/chesspieces/wikipedia/{piece}.png';
 
 Game.prototype.initBoard = function(opts) {
   this.board = ChessBoard(this.el.attr('id'), opts);
+  console.log(this.board);
 };
 
 Game.prototype.getGame = function(callback) {
@@ -56,6 +57,10 @@ Game.prototype.dragCheck = function() {
   return ! this.locked;
 }
 
+Game.prototype.ongoing = function(result) {
+  return result == 'other' ? true : false
+}
+
 Game.prototype.sendMove = function(source, target, piece, newPosition, oldPosition) {
   var color = this.colorMap[piece.charAt(0)];
 
@@ -70,16 +75,23 @@ Game.prototype.sendMove = function(source, target, piece, newPosition, oldPositi
     }).done(function(msg) {
       self.getGame(function(game) {
         self.board.position(game.fenstring);
+        $('.result-js').text(game.result);
+        $('.completed_at-js').text(game.completed_at);
+
+        if (game.result == 'other') {
+          self.unlock();
+        }
       });
     }).fail(function(data) {
       self.board.position(oldPosition);
+
       if (data.responseJSON && data.responseJSON.base instanceof Array) {
         var msg = data.responseJSON.base.join(', ');
       } else {
         var msg = 'Unkown error';
       }
+
       alert('Error: ' + msg);
-    }).always(function() {
       self.unlock();
     });
   }

@@ -16,44 +16,11 @@
 </p>
 
 <p>
-  <strong>Piece:</strong>
-  <%= @move.piece %>
+  <strong>Notation:</strong>
+  <%= @move.notation %>
 </p>
 
-<p>
-  <strong>Departure:</strong>
-  <%= @move.departure %>
-</p>
-
-<p>
-  <strong>Destination:</strong>
-  <%= @move.destination %>
-</p>
-
-<p>
-  <strong>Capture:</strong>
-  <%= @move.capture %>
-</p>
-
-<p>
-  <strong>Castle:</strong>
-  <%= @move.castle %>
-</p>
-
-<p>
-  <strong>Promotion:</strong>
-  <%= @move.promotion %>
-</p>
-
-<p>
-  <strong>Check:</strong>
-  <%= @move.check %>
-</p>
-
-<p>
-  <strong>Mate:</strong>
-  <%= @move.mate %>
-</p>
+<div id="board" data-type="move" data-id="<%= @move.id %>" style="width: 400px"></div>
 
 <%= link_to 'Edit', edit_move_path(@move) %> |
 <%= link_to 'Back', moves_path %>

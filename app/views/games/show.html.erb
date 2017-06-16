@@ -15,7 +15,7 @@
   <%= @game.completed_at %>
 </p>
 
-<div id="board" data-game="<%= @game.id %>" style="width: 400px"></div>
+<div id="board" data-type="game" data-id="<%= @game.id %>" style="width: 400px"></div>
 
 <%= link_to 'Edit', edit_game_path(@game) %> |
 <%= link_to 'Back', games_path %>

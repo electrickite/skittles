@@ -22,43 +22,8 @@
   </div>
 
   <div class="field">
-    <%= form.label :piece %>
-    <%= form.select :piece, move.class.pieces.keys.map {|key| [key.humanize, key]}, id: :move_piece %>
-  </div>
-
-  <div class="field">
-    <%= form.label :departure %>
-    <%= form.text_field :departure, id: :move_departure %>
-  </div>
-
-  <div class="field">
-    <%= form.label :destination %>
-    <%= form.text_field :destination, id: :move_destination %>
-  </div>
-
-  <div class="field">
-    <%= form.label :capture %>
-    <%= form.check_box :capture, id: :move_capture %>
-  </div>
-
-  <div class="field">
-    <%= form.label :castle %>
-    <%= form.select :castle, move.class.castles.keys.map {|key| [key.humanize, key]}, include_blank: true, id: :move_castle %>
-  </div>
-
-  <div class="field">
-    <%= form.label :promotion %>
-    <%= form.select :promotion, move.class.promotions.keys.map {|key| [key.humanize, key]}, include_blank: true, id: :move_promotion %>
-  </div>
-
-  <div class="field">
-    <%= form.label :check %>
-    <%= form.check_box :check, id: :move_check %>
-  </div>
-
-  <div class="field">
-    <%= form.label :mate %>
-    <%= form.check_box :mate, id: :move_mate %>
+    <%= form.label :notation %>
+    <%= form.text_field :notation, id: :move_notation %>
   </div>
 
   <div class="actions">

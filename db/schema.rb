@@ -25,14 +25,7 @@ ActiveRecord::Schema.define(version: 20170610025128) do
     t.integer "game_id"
     t.integer "number", default: 0, null: false
     t.integer "color", default: 0, null: false
-    t.integer "piece", default: 0, null: false
-    t.string "departure", null: false
-    t.string "destination", null: false
-    t.boolean "capture"
-    t.integer "castle"
-    t.integer "promotion"
-    t.boolean "check"
-    t.boolean "mate"
+    t.string "notation", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["game_id", "number"], name: "index_moves_on_game_id_and_number", unique: true

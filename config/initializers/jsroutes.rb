@@ -1,3 +1,3 @@
 JsRoutes.setup do |config|
-  config.include = [/^moves$/, /^game$/]
+  config.include = [/^move/, /^game$/]
 end

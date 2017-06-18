@@ -46,4 +46,8 @@ class Move < ApplicationRecord
   def board
     game.board_for self
   end
+
+  def attributes
+    super.merge({ 'fenstring' => nil, 'check' => nil, 'checkmate' => nil })
+  end
 end

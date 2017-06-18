@@ -5,45 +5,31 @@ function Game(el) {
   this.id = this.el.data('id');
   this.locked = false;
   this.speed = 200;
-  var self = this;
-
-  if (this.type == 'game') {
-    this.getGame(function(game) {
-      self.initBoard({
-        position: game.fenstring,
-        draggable: self.ongoing(game.result),
-        pieceTheme: self.theme,
-        showErrors: false,
-        moveSpeed: self.speed,
-        onDragStart: self.dragCheck.bind(self),
-        onDrop: self.sendMove.bind(self)
-      });
-    });
-  } else {
-    this.getMove(function(move) {
-      console.log(move);
-      self.initBoard({
-        position: move.fenstring,
-        draggable: false,
-        pieceTheme: self.theme
-      });
-    });
-  }
 }
 
 Game.prototype.colorMap = { w: 'white', b: 'black' };
 Game.prototype.theme = '/images/chesspieces/wikipedia/{piece}.png';
 
-Game.prototype.initBoard = function(opts) {
+Game.prototype.initBoard = function(fen, result) {
+  if (this.type == 'game') {
+    var opts = {
+      position: fen,
+      draggable: this.ongoing(result),
+      pieceTheme: this.theme,
+      showErrors: false,
+      moveSpeed: this.speed,
+      onDragStart: this.dragCheck.bind(this),
+      onDrop: this.sendMove.bind(this)
+    };
+  } else {
+    var opts = {
+      position: fen,
+      draggable: false,
+      pieceTheme: this.theme
+    };
+  }
+
   this.board = ChessBoard(this.el.attr('id'), opts);
-};
-
-Game.prototype.getGame = function(callback) {
-  $.get(Routes.game_path(this.id, {format: 'json'}), callback);
-};
-
-Game.prototype.getMove = function(callback) {
-  $.get(Routes.move_path(this.id, {format: 'json'}), callback);
 };
 
 Game.prototype.lock = function() {
@@ -56,11 +42,38 @@ Game.prototype.unlock = function() {
 
 Game.prototype.dragCheck = function() {
   return ! this.locked;
-}
+};
 
 Game.prototype.ongoing = function(result) {
   return result == 'other' ? true : false
-}
+};
+
+Game.prototype.update = function(game, move) {
+  var self = this,
+      oldFen;
+
+  if (this.board) {
+    oldFen = this.board.fen();
+    self.board.position(game.fenstring);
+  } else {
+    this.initBoard(game.fenstring, game.result);
+  }
+
+  $('.result-js').text(game.result);
+  $('.completed_at-js').text(game.completed_at);
+
+  if (move && move.fenstring.split(' ')[0] != oldFen) {
+    setTimeout(function() {
+      if (move.checkmate) {
+        alert('Checkmate!');
+      } else if (move.check) {
+        alert('Check!');
+      }
+    }, self.speed);
+  }
+
+  if (!game.completed_at) { this.unlock(); }
+};
 
 Game.prototype.sendMove = function(source, target, piece, newPosition, oldPosition) {
   var color = this.colorMap[piece.charAt(0)];
@@ -73,22 +86,6 @@ Game.prototype.sendMove = function(source, target, piece, newPosition, oldPositi
       method: "POST",
       url: Routes.moves_path({format: 'json'}),
       data: { move: { game_id: self.id, color: color, notation: source + target } }
-    }).done(function(msg) {
-      self.getGame(function(game) {
-        self.board.position(game.fenstring);
-        $('.result-js').text(game.result);
-        $('.completed_at-js').text(game.completed_at);
-
-        setTimeout(function() {
-          if (game.current_move.checkmate) {
-            alert('Checkmate!');
-          } else if (game.current_move.check) {
-            alert('Check!');
-          }
-        }, self.speed);
-
-        if (!game.completed_at) { self.unlock(); }
-      });
     }).fail(function(data) {
       self.board.position(oldPosition);
 
@@ -103,10 +100,3 @@ Game.prototype.sendMove = function(source, target, piece, newPosition, oldPositi
     });
   }
 };
-
-$(document).on('turbolinks:load', function() {
-  var $board = $('#board');
-  if ($board.length) {
-    new Game($board[0]);
-  }
-});

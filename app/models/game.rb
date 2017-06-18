@@ -37,8 +37,10 @@ class Game < ApplicationRecord
     if over?
       end_game!
     else
-      play_next if active_player == :black
+      #play_next if active_player == :black
     end
+
+    GameChannel.broadcast_to(self, game: self, move: current_move)
   end
 
   def board_for(move)
@@ -51,6 +53,11 @@ class Game < ApplicationRecord
 
   def current_move
     moves.last
+  end
+
+  def attributes
+
+    super.merge({ 'fenstring' => nil })
   end
 
   private

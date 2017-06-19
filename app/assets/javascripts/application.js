@@ -16,3 +16,16 @@
 //= require turbolinks
 //= require chessboard
 //= require_tree .
+
+$(document).on('turbolinks:load', function() {
+  var $board = $('#board')
+
+  if ($board.length) {
+    var game = new Game($board[0]);
+    game.fetch();
+
+    if ($board.data('type') == 'game') {
+      subscribeToGame(game);
+    }
+  }
+});

@@ -8,7 +8,7 @@ function Game(el) {
 }
 
 Game.prototype.colorMap = { w: 'white', b: 'black' };
-Game.prototype.theme = '/images/chesspieces/wikipedia/{piece}.png';
+Game.prototype.theme = '/images/chesspieces/default/{piece}.png';
 
 Game.prototype.initBoard = function(fen, result) {
   if (this.type == 'game') {
@@ -73,6 +73,30 @@ Game.prototype.update = function(game, move) {
   }
 
   if (!game.completed_at) { this.unlock(); }
+};
+
+Game.prototype.fetch = function() {
+  if (this.type == 'game') {
+    this.fetchGame();
+  } else {
+    this.fetchMove();
+  }
+};
+
+Game.prototype.fetchGame = function() {
+  var self = this;
+
+  $.get(Routes.game_path(this.id, {format: 'json'}), function(game) {
+    self.update(game, game.current_move);
+  });
+};
+
+Game.prototype.fetchMove = function() {
+  var self = this;
+
+  $.get(Routes.move_path(this.id, {format: 'json'}), function(move) {
+    self.update(move);
+  });
 };
 
 Game.prototype.sendMove = function(source, target, piece, newPosition, oldPosition) {

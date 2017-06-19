@@ -25,6 +25,10 @@ class Move < ApplicationRecord
     board.to_fen
   end
 
+  def board
+    game.board_for self
+  end
+
   private
 
   def set_number
@@ -41,10 +45,6 @@ class Move < ApplicationRecord
 
   def update_game
     game.update_board!
-  end
-
-  def board
-    game.board_for self
   end
 
   def attributes

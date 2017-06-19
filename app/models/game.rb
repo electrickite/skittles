@@ -45,7 +45,7 @@ class Game < ApplicationRecord
 
   def board_for(move)
     if move.is_a? Integer
-      game[0]
+      game[move]
     else
       game[moves.index(move)]
     end
@@ -56,7 +56,6 @@ class Game < ApplicationRecord
   end
 
   def attributes
-
     super.merge({ 'fenstring' => nil })
   end
 

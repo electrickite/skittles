@@ -1,0 +1,26 @@
+<div id="board" data-type="<%= board.class.name.downcase %>" data-id="<%= board.id %>" style="width: 400px">
+  <div class="chessboard-63f37">
+    <div class="board-b72b1" style="width: 392px;">
+      <%- (1..8).reverse_each do |row| -%>
+        <%- color = row.even? ? :white : :black -%>
+        <div class="row-5277c">
+          <%- ('a'..'h').each do |col| -%>
+            <%- square = "#{col}#{row}" -%>
+            <div class="square-55d63 <%= color = square_color_class(color) %> square-<%= square %>" style="width: 49px; height: 49px">
+              <%- if row == 1 -%>
+                <div class="notation-322f9 alpha-d2270"><%= col %></div>
+              <%- end -%>
+              <%- if col == 'a' -%>
+                <div class="notation-322f9 numeric-fc462"><%= row %></div>
+              <%- end -%>
+              <%- if board.board[square].present? -%>
+                <img src="<%= piece_image_path board.board[square] %>" alt="" class="piece-417db" style="width: 49px;height: 49px;">
+              <%- end -%>
+            </div>
+          <%- end -%>
+          <div class="clearfix-7da63"></div>
+        </div>
+      <%- end -%>
+    </div>
+  </div>
+</div>

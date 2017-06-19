@@ -20,7 +20,7 @@
   <%= @move.notation %>
 </p>
 
-<div id="board" data-type="move" data-id="<%= @move.id %>" style="width: 400px"></div>
+<%= render partial: "board", object: @move %>
 
 <%= link_to 'Edit', edit_move_path(@move) %> |
 <%= link_to 'Back', moves_path %>

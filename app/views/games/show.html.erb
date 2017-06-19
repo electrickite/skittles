@@ -15,7 +15,7 @@
   <span class="completed_at-js"><%= @game.completed_at %></span>
 </p>
 
-<div id="board" data-type="game" data-id="<%= @game.id %>" style="width: 400px"></div>
+<%= render partial: "board", object: @game %>
 
 <%= link_to 'Edit', edit_game_path(@game) %> |
 <%= link_to 'Back', games_path %>

@@ -15,10 +15,3 @@ function subscribeToGame(game) {
     }
   });
 }
-
-$(document).on('turbolinks:load', function() {
-  var $board = $('#board');
-  if ($board.length && $board.data('type') == 'game') {
-    subscribeToGame(new Game($board[0]));
-  }
-});

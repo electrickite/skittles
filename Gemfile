@@ -21,6 +21,7 @@ gem 'chess'
 gem 'stockfish'
 gem 'devise'
 gem 'bootstrap-sass'
+gem 'simple_form'
 
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby

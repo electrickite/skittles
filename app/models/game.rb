@@ -5,6 +5,7 @@ class Game < ApplicationRecord
 
   enum result: { other: 0, white_win: 1, black_win: 2, draw: 3 }
 
+  validates :result, presence: true
   validates :result, inclusion: { in: results.keys }
 
   delegate :board, :over?, :status, :active_player, to: :game

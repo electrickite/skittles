@@ -275,3 +275,23 @@ Devise.setup do |config|
   # so you need to do it manually. For the users scope, it would be:
   # config.omniauth_path_prefix = '/my_engine/users/auth'
 end
+
+module DevisePermittedParameters
+  extend ActiveSupport::Concern
+
+  included do
+    before_action :configure_permitted_parameters
+  end
+
+  protected
+
+  def configure_permitted_parameters
+    # Allow email to be set when creating account
+    devise_parameter_sanitizer.permit(:sign_up, keys: [:email])
+
+    # Prevent username from being edited
+    devise_parameter_sanitizer.permit(:account_update, keys: [:email], except: [:username])
+  end
+end
+
+DeviseController.send :include, DevisePermittedParameters

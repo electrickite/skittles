@@ -5,6 +5,7 @@ Rails.application.routes.draw do
 
   resources :moves
   resources :games
+  resources :users, only: [:index, :show, :destroy]
 
   root to: "games#index"
 end

@@ -1,32 +1,6 @@
-<%= form_with(model: move, local: true) do |form| %>
-  <% if move.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(move.errors.count, "error") %> prohibited this move from being saved:</h2>
-
-      <ul>
-      <% move.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-  <div class="field">
-    <%= form.label :game_id %>
-    <%= form.collection_select :game_id, Game.all, :id, :to_s, id: :move_game_id %>
-  </div>
-
-  <div class="field">
-    <%= form.label :color %>
-    <%= form.select :color, move.class.colors.keys.map {|key| [key.humanize, key]}, id: :move_color %>
-  </div>
-
-  <div class="field">
-    <%= form.label :notation %>
-    <%= form.text_field :notation, id: :move_notation %>
-  </div>
-
-  <div class="actions">
-    <%= form.submit %>
-  </div>
+<%= simple_form_for move do |f| %>
+  <%= f.association :game, include_blank: false %>
+  <%= f.input :color, collection: move.class.colors.keys.map {|key| [key.humanize, key]}, include_blank: false %>
+  <%= f.input :notation %>
+  <%= f.button :submit, 'Save' %>
 <% end %>

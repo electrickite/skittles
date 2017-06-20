@@ -22,6 +22,7 @@ gem 'stockfish'
 gem 'devise'
 gem 'bootstrap-sass'
 gem 'simple_form'
+gem 'active_link_to'
 
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby

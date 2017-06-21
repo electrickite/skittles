@@ -108,8 +108,8 @@ Game.prototype.sendMove = function(source, target, piece, newPosition, oldPositi
 
     $.ajax({
       method: "POST",
-      url: Routes.moves_path({format: 'json'}),
-      data: { move: { game_id: self.id, color: color, notation: source + target } }
+      url: Routes.game_moves_path(self.id, {format: 'json'}),
+      data: { move: { color: color, notation: source + target } }
     }).fail(function(data) {
       self.board.position(oldPosition);
 

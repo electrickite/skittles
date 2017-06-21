@@ -3,8 +3,10 @@ Rails.application.routes.draw do
 
   devise_for :users
 
-  resources :moves
-  resources :games
+  resources :games do
+    resources :moves, shallow: true
+  end
+
   resources :users, only: [:index, :show, :destroy]
 
   root to: "games#index"

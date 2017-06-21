@@ -1,6 +1,6 @@
-<%- content_for(:title) { 'Editing move' } -%>
+<%- content_for(:title) { "Editing move #{@move.number}" } -%>
 
 <%= render 'form', move: @move %>
 
 <%= link_to 'Show', @move %> |
-<%= link_to 'Back', moves_path %>
+<%= link_to 'Back', game_moves_path(@move.game) %>

@@ -1,8 +1,8 @@
-<%- content_for(:title) { 'Move' } -%>
+<%- content_for(:title) { "Move #{@move.number}" } -%>
 
 <p>
   <strong>Game:</strong>
-  <%= @move.game %>
+  <%= link_to @move.game, @move.game %>
 </p>
 
 <p>
@@ -20,7 +20,14 @@
   <%= @move.notation %>
 </p>
 
+<p>
+  <strong>Played:</strong>
+  <%= @move.created_at %>
+</p>
+
 <%= render partial: "board", object: @move %>
 
+<br>
+
 <%= link_to 'Edit', edit_move_path(@move) %> |
-<%= link_to 'Back', moves_path %>
+<%= link_to 'Back', game_moves_path(@move.game) %>

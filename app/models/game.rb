@@ -1,7 +1,7 @@
 class Game < ApplicationRecord
   RESULT_MAP = { '1-0' => 'white_win', '0-1' => 'black_win', '1/2-1/2' => 'draw', '*' => 'other'}.freeze
 
-  has_many :moves, inverse_of: :game, dependent: :destroy
+  has_many :moves, -> { order 'number ASC' }, inverse_of: :game, dependent: :destroy
 
   enum result: { other: 0, white_win: 1, black_win: 2, draw: 3 }
 
@@ -11,7 +11,7 @@ class Game < ApplicationRecord
   delegate :board, :over?, :status, :active_player, to: :game
 
   def to_s
-    name || id
+    name || "Game #{id}"
   end
 
   def fenstring

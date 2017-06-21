@@ -1,10 +1,11 @@
 class MovesController < ApplicationController
+  before_action :set_game, only: [:index, :new, :create]
   before_action :set_move, only: [:show, :edit, :update, :destroy]
 
   # GET /moves
   # GET /moves.json
   def index
-    @moves = Move.includes(:game).all
+    @moves = @game.moves
   end
 
   # GET /moves/1
@@ -14,7 +15,7 @@ class MovesController < ApplicationController
 
   # GET /moves/new
   def new
-    @move = Move.new
+    @move = Move.new(game: @game)
   end
 
   # GET /moves/1/edit
@@ -25,6 +26,7 @@ class MovesController < ApplicationController
   # POST /moves.json
   def create
     @move = Move.new(move_params)
+    @move.game = @game
 
     respond_to do |format|
       if @move.save
@@ -62,13 +64,16 @@ class MovesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_move
-      @move = Move.includes(:game).find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def move_params
-      params.require(:move).permit(:game_id, :number, :color, :notation)
-    end
+  def set_move
+    @move = Move.includes(:game).find(params[:id])
+  end
+
+  def set_game
+    @game = Game.includes(:moves).find(params[:game_id])
+  end
+
+  def move_params
+    params.require(:move).permit(:color, :notation)
+  end
 end

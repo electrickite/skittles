@@ -1,5 +1,5 @@
-<%- content_for(:title) { 'New move' } -%>
+<%- content_for(:title) { "New move" } -%>
 
-<%= render 'form', move: @move %>
+<%= render 'form', move: @move, game: @game %>
 
-<%= link_to 'Back', moves_path %>
+<%= link_to 'Back', game_moves_path(@game) %>

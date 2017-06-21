@@ -1,5 +1,9 @@
-<%= simple_form_for move do |f| %>
-  <%= f.association :game, include_blank: false %>
+<%= simple_form_for [local_assigns[:game], local_assigns[:move]].compact do |f| %>
+  <div class="form-group">
+    <label class="control-label">Game</label>
+    <p class="form-control-static"><%= move.game %></p>
+  </div>
+
   <%= f.input :color, collection: move.class.colors.keys.map {|key| [key.humanize, key]}, include_blank: false %>
   <%= f.input :notation %>
   <%= f.button :submit, 'Save' %>

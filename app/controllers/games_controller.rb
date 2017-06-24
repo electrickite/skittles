@@ -1,10 +1,11 @@
 class GamesController < ApplicationController
   before_action :set_game, only: [:show, :edit, :update, :destroy]
+  load_and_authorize_resource
 
   # GET /games
   # GET /games.json
   def index
-    @games = Game.includes(:players).all
+    @games = @games.includes(:players)
   end
 
   # GET /games/1
@@ -14,7 +15,6 @@ class GamesController < ApplicationController
 
   # GET /games/new
   def new
-    @game = Game.new
     @game.players.build(color: :white)
     @game.players.build(color: :black)
   end
@@ -26,7 +26,6 @@ class GamesController < ApplicationController
   # POST /games
   # POST /games.json
   def create
-    @game = Game.new(game_params)
     @game.owner = current_user
 
     respond_to do |format|

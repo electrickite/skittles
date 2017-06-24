@@ -1,11 +1,12 @@
 class MovesController < ApplicationController
-  before_action :set_game, only: [:index, :new, :create]
   before_action :set_move, only: [:show, :edit, :update, :destroy]
+  load_and_authorize_resource :game
+  load_and_authorize_resource through: :game, shallow: true
 
   # GET /moves
   # GET /moves.json
   def index
-    @moves = @game.moves
+    @moves = @moves.includes(:player)
   end
 
   # GET /moves/1
@@ -15,7 +16,6 @@ class MovesController < ApplicationController
 
   # GET /moves/new
   def new
-    @move = Move.new(game: @game)
   end
 
   # GET /moves/1/edit
@@ -25,9 +25,6 @@ class MovesController < ApplicationController
   # POST /moves
   # POST /moves.json
   def create
-    @move = Move.new(move_params)
-    @move.game = @game
-
     respond_to do |format|
       if @move.save
         format.html { redirect_to @move, notice: 'Move was successfully created.' }
@@ -67,10 +64,6 @@ class MovesController < ApplicationController
 
   def set_move
     @move = Move.includes(:game, :player).find(params[:id])
-  end
-
-  def set_game
-    @game = Game.includes(:moves).find(params[:game_id])
   end
 
   def move_params

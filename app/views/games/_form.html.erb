@@ -1,6 +1,12 @@
 <%= simple_form_for game do |f| %>
   <%= f.input :name %>
+
+  <%= f.simple_fields_for :players do |p| %>
+    <%= p.association :user, label: "#{p.object.color.humanize} player" %>
+    <%= p.hidden_field :color %>
+  <% end %>
+
   <%= f.input :result, collection: game.class.results.keys.map {|key| [key.humanize, key]}, include_blank: false %>
-  <%= f.input :completed_at %>
+  <%= f.input :completed_at, include_blank: true %>
   <%= f.button :submit, 'Save' %>
 <% end %>

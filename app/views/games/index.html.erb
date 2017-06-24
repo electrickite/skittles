@@ -4,6 +4,8 @@
   <thead>
     <tr>
       <th>Name</th>
+      <th>White</th>
+      <th>Black</th>
       <th>Started</th>
       <th>Completed</th>
       <th>Result</th>
@@ -12,9 +14,11 @@
   </thead>
 
   <tbody>
-    <% @games.each do |game| %>
+    <%- if @games.each do |game| -%>
       <tr>
         <td><%= game.name %></td>
+        <td><%= player_link game.white_player %></td>
+        <td><%= player_link game.black_player %></td>
         <td><%= game.created_at %></td>
         <td><%= game.completed_at %></td>
         <td><%= game.result %></td>
@@ -22,7 +26,11 @@
         <td><%= link_to 'Edit', edit_game_path(game) %></td>
         <td><%= link_to 'Destroy', game, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
-    <% end %>
+    <%- end.empty? -%>
+      <tr>
+        <td colspan="9">There are currently no games.</td>
+      </tr>
+    <%- end -%>
   </tbody>
 </table>
 

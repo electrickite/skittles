@@ -1,8 +1,22 @@
-<%- content_for(:title) { 'Game' } -%>
+<%- content_for(:title) { @game.to_s } -%>
+
+<%= render partial: "board", object: @game %>
+
+<br>
 
 <p>
-  <strong>Name:</strong>
-  <%= @game.name %>
+  <strong>White player:</strong>
+  <%= player_link @game.white_player %>
+</p>
+
+<p>
+  <strong>Black player:</strong>
+  <%= player_link @game.black_player %>
+</p>
+
+<p>
+  <strong>Owner:</strong>
+  <%= link_to @game.owner, @game.owner %>
 </p>
 
 <p>
@@ -14,8 +28,6 @@
   <strong>Completed at:</strong>
   <span class="completed_at-js"><%= @game.completed_at %></span>
 </p>
-
-<%= render partial: "board", object: @game %>
 
 <br>
 

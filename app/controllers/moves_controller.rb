@@ -66,7 +66,7 @@ class MovesController < ApplicationController
   private
 
   def set_move
-    @move = Move.includes(:game).find(params[:id])
+    @move = Move.includes(:game, :player).find(params[:id])
   end
 
   def set_game
@@ -74,6 +74,6 @@ class MovesController < ApplicationController
   end
 
   def move_params
-    params.require(:move).permit(:color, :notation)
+    params.require(:move).permit(:player_id, :notation)
   end
 end

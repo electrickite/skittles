@@ -294,4 +294,6 @@ module DevisePermittedParameters
   end
 end
 
-DeviseController.send :include, DevisePermittedParameters
+Rails.application.config.to_prepare do
+  DeviseController.send :include, DevisePermittedParameters
+end

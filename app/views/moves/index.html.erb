@@ -13,7 +13,7 @@
   </thead>
 
   <tbody>
-    <% @moves.each do |move| %>
+    <%- if @moves.each do |move| -%>
       <tr>
         <td><%= move.game %></td>
         <td><%= move.number %></td>
@@ -24,7 +24,11 @@
         <td><%= link_to 'Edit', edit_move_path(move) %></td>
         <td><%= link_to 'Destroy', move, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
-    <% end %>
+    <%- end.empty? -%>
+      <tr>
+        <td colspan="9">There are currently no moves.</td>
+      </tr>
+    <%- end -%>
   </tbody>
 </table>
 

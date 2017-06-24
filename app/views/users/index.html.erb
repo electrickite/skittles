@@ -9,12 +9,16 @@
   </thead>
 
   <tbody>
-    <% @users.each do |user| %>
+    <%- if @users.each do |user| -%>
       <tr>
         <td><%= user.username %></td>
         <td><%= link_to 'Show', user %></td>
         <td><%= link_to 'Destroy', user, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
-    <% end %>
+    <%- end.empty? -%>
+      <tr>
+        <td colspan="9">There are currently no users. <%= link_to 'Sign up', new_user_registration_path %></td>
+      </tr>
+    <%- end -%>
   </tbody>
 </table>

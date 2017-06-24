@@ -5,6 +5,10 @@ function Game(el) {
   this.id = this.el.data('id');
   this.locked = false;
   this.speed = 200;
+  this.players = {
+    white: this.el.data('white'),
+    black: this.el.data('black')
+  };
 }
 
 Game.prototype.colorMap = { w: 'white', b: 'black' };
@@ -109,7 +113,7 @@ Game.prototype.sendMove = function(source, target, piece, newPosition, oldPositi
     $.ajax({
       method: "POST",
       url: Routes.game_moves_path(self.id, {format: 'json'}),
-      data: { move: { color: color, notation: source + target } }
+      data: { move: { player_id: self.players[color], notation: source + target } }
     }).fail(function(data) {
       self.board.position(oldPosition);
 

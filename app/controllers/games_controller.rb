@@ -4,7 +4,7 @@ class GamesController < ApplicationController
   # GET /games
   # GET /games.json
   def index
-    @games = Game.all
+    @games = Game.includes(:players).all
   end
 
   # GET /games/1
@@ -15,6 +15,8 @@ class GamesController < ApplicationController
   # GET /games/new
   def new
     @game = Game.new
+    @game.players.build(color: :white)
+    @game.players.build(color: :black)
   end
 
   # GET /games/1/edit
@@ -25,6 +27,7 @@ class GamesController < ApplicationController
   # POST /games.json
   def create
     @game = Game.new(game_params)
+    @game.owner = current_user
 
     respond_to do |format|
       if @game.save
@@ -64,11 +67,12 @@ class GamesController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_game
-      @game = Game.includes(:moves).find(params[:id])
+      @game = Game.includes(:players, :moves).find(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def game_params
-      params.require(:game).permit(:name, :result, :completed_at)
+      params.require(:game).permit(:name, :owner_id, :result, :completed_at,
+        players_attributes: [:id, :color, :user_id ])
     end
 end

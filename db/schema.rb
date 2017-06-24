@@ -10,26 +10,41 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170619044033) do
+ActiveRecord::Schema.define(version: 20170610025128) do
 
   create_table "games", force: :cascade do |t|
     t.string "name"
+    t.integer "owner_id"
     t.integer "result", default: 0, null: false
     t.datetime "completed_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["owner_id"], name: "index_games_on_owner_id"
     t.index ["result"], name: "index_games_on_result"
   end
 
   create_table "moves", force: :cascade do |t|
-    t.integer "game_id"
+    t.integer "game_id", null: false
+    t.integer "player_id", null: false
     t.integer "number", default: 0, null: false
-    t.integer "color", default: 0, null: false
     t.string "notation", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["game_id", "number"], name: "index_moves_on_game_id_and_number", unique: true
     t.index ["game_id"], name: "index_moves_on_game_id"
+    t.index ["number"], name: "index_moves_on_number"
+    t.index ["player_id"], name: "index_moves_on_player_id"
+  end
+
+  create_table "players", force: :cascade do |t|
+    t.integer "game_id", null: false
+    t.integer "user_id"
+    t.integer "color", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["game_id", "color"], name: "index_players_on_game_id_and_color", unique: true
+    t.index ["game_id"], name: "index_players_on_game_id"
+    t.index ["user_id"], name: "index_players_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|

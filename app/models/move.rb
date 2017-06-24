@@ -1,23 +1,24 @@
 class Move < ApplicationRecord
-  belongs_to :game, inverse_of: :moves
+  belongs_to :game
+  belongs_to :player
+  has_one :user, through: :player, inverse_of: :moves
 
   before_create :set_number
   before_save :normalize_notation
   after_save :update_game
 
-  enum color: { white: 0, black: 1 }
-
-  validates :number, :color, :notation, presence: true
+  validates :number, :notation, presence: true
   validates :number, numericality: { only_integer: true }
   validates :number, uniqueness: { scope: :game }
-  validates :color, inclusion: { in: colors.keys }
   validate :legal
 
   def to_s
     notation
   end
 
+  delegate :color, to: :player
   delegate :insufficient_material?, :stalemate?, :checkmate?, :check?, to: :board
+
   alias_method :check, :check?
   alias_method :checkmate, :checkmate?
 

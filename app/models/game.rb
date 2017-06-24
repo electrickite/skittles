@@ -1,17 +1,30 @@
 class Game < ApplicationRecord
   RESULT_MAP = { '1-0' => 'white_win', '0-1' => 'black_win', '1/2-1/2' => 'draw', '*' => 'other'}.freeze
 
-  has_many :moves, -> { order 'number ASC' }, inverse_of: :game, dependent: :destroy
+  has_many :players, dependent: :destroy
+  belongs_to :owner, class_name: 'User', inverse_of: :owned_games, optional: true
+  has_many :moves, -> { order 'number ASC' }, dependent: :destroy
+
+  accepts_nested_attributes_for :players
 
   enum result: { other: 0, white_win: 1, black_win: 2, draw: 3 }
 
   validates :result, presence: true
   validates :result, inclusion: { in: results.keys }
+  validates :players, length: { minimum: 2, maximum: 2 }
 
   delegate :board, :over?, :status, :active_player, to: :game
 
   def to_s
     name || "Game #{id}"
+  end
+
+  def white_player
+    players.white.take
+  end
+
+  def black_player
+    players.black.take
   end
 
   def fenstring

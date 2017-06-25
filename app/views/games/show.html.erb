@@ -20,6 +20,11 @@
 </p>
 
 <p>
+  <strong>Moves:</strong>
+  <%= @game.moves.count %><% unless @game.moves.count.zero? %> (<%= link_to 'list', game_moves_path(@game) %>)<% end %>
+</p>
+
+<p>
   <strong>Result:</strong>
   <span class="result-js"><%= @game.result %></span>
 </p>
@@ -29,8 +34,11 @@
   <span class="completed_at-js"><%= @game.completed_at %></span>
 </p>
 
-<br>
+<%- if can?(:new, @move) || can?(:update, @game) -%>
+  <p>
+    <strong>Actions:</strong>
+    <%= game_action_links @game, @move %>
+  </p>
+<%- end -%>
 
-<%= link_to 'Moves', game_moves_path(@game) %> |
-<%= link_to 'Edit', edit_game_path(@game) %> |
-<%= link_to 'Back', games_path %>
+<%= render 'breadcrumb', links: [['Games', games_path], @game] %>

@@ -1,4 +1,5 @@
 <%- content_for(:title) { "Move #{@move.number}" } -%>
+<%- content_for(:back_link) { link_to 'Back', game_moves_path(@move.game) } -%>
 
 <p>
   <strong>Game:</strong>
@@ -27,7 +28,4 @@
 
 <%= render partial: "board", object: @move %>
 
-<br>
-
-<%= link_to 'Edit', edit_move_path(@move) %> |
-<%= link_to 'Back', game_moves_path(@move.game) %>
+<%= render 'breadcrumb', links: [['Games', games_path], [@move.game, @move.game], ['Moves', game_moves_path(@move.game)], "Move #{@move.number}"] %>

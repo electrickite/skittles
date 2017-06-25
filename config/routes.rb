@@ -7,7 +7,7 @@ Rails.application.routes.draw do
     resources :moves, shallow: true
   end
 
-  resources :users, only: [:index, :show, :destroy]
+  resources :users, only: [:index, :show]
 
   root to: "games#index"
 end

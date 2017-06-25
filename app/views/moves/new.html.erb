@@ -2,4 +2,4 @@
 
 <%= render 'form', move: @move, game: @game %>
 
-<%= link_to 'Back', game_moves_path(@game) %>
+<%= render 'breadcrumb', links: [['Games', games_path], [@game, @game], 'New move'] %>

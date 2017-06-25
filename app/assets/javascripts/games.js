@@ -114,13 +114,15 @@ Game.prototype.sendMove = function(source, target, piece, newPosition, oldPositi
       method: "POST",
       url: Routes.game_moves_path(self.id, {format: 'json'}),
       data: { move: { player_id: self.players[color], notation: source + target } }
-    }).fail(function(data) {
+    }).fail(function(data, status, error) {
       self.board.position(oldPosition);
 
       if (data.responseJSON && data.responseJSON.base instanceof Array) {
         var msg = data.responseJSON.base.join(', ');
+      } else if (error == 'Forbidden') {
+        var msg = 'You do not have permission to make that move!';
       } else {
-        var msg = 'Unkown error';
+        var msg = 'Unkown error!';
       }
 
       alert('Error: ' + msg);

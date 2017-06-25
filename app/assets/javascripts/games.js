@@ -63,8 +63,14 @@ Game.prototype.update = function(game, move) {
     this.initBoard(game.fenstring, game.result);
   }
 
+  var activePlayer = game.active_player.toLowerCase().replace(/\b[a-z]/g, function(letter) {
+    return letter.toUpperCase();
+  });
+
   $('.result-js').text(game.result);
   $('.completed_at-js').text(game.completed_at);
+  $('.moves-js').text(game.num_moves);
+  $('.active_player-js').text(activePlayer + "'s move");
 
   if (move && move.fenstring.split(' ')[0] != oldFen) {
     setTimeout(function() {

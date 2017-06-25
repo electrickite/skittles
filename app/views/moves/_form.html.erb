@@ -5,7 +5,7 @@
   </div>
 
   <%= f.association :player, label_method: :titleized_color, value_method: :id,
-    include_blank: false, collection: Player.for_game(@game), label: 'Color' %>
+    include_blank: false, collection: Player.for_game_user(@game, current_user), label: 'Color' %>
   <%= f.input :notation %>
   <%= f.button :submit, 'Save' %>
 <% end %>

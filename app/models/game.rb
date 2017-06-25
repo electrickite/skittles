@@ -69,8 +69,12 @@ class Game < ApplicationRecord
     moves.last
   end
 
+  def num_moves
+    moves.count
+  end
+
   def attributes
-    super.merge({ 'fenstring' => nil })
+    super.merge({ 'fenstring' => nil, 'num_moves' => nil, 'active_player' => nil })
   end
 
   private

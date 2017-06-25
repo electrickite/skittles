@@ -3,7 +3,7 @@
 <%= render partial: "board", object: @game %>
 
 <p>
-  <em><%= @game.active_player.to_s.titleize %>'s move</em>
+  <em class="active_player-js"><%= @game.active_player.to_s.titleize %>'s move</em>
 </p>
 
 <p>
@@ -23,7 +23,7 @@
 
 <p>
   <strong>Moves:</strong>
-  <%= @game.moves.count %><% unless @game.moves.count.zero? %> (<%= link_to 'list', game_moves_path(@game) %>)<% end %>
+  <span class="moves-js"><%= @game.moves.count %></span><% unless @game.moves.count.zero? %> (<%= link_to 'list', game_moves_path(@game) %>)<% end %>
 </p>
 
 <p>

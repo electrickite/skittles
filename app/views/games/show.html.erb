@@ -2,7 +2,9 @@
 
 <%= render partial: "board", object: @game %>
 
-<br>
+<p>
+  <em><%= @game.active_player.to_s.titleize %>'s move</em>
+</p>
 
 <p>
   <strong>White player:</strong>

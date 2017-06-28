@@ -11,6 +11,7 @@ class User < ApplicationRecord
 
   validates :username, presence: true
   validates :username, uniqueness: { case_sensitive: false }
+  validates :username, :email, length: { maximum: 191 }
 
   def to_s
     username

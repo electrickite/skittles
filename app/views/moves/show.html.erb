@@ -28,4 +28,20 @@
 
 <%= render partial: "board", object: @move %>
 
-<%= render 'breadcrumb', links: [['Games', games_path], [@move.game, @move.game], ['Moves', game_moves_path(@move.game)], "Move #{@move.number}"] %>
+<nav class="move-nav" aria-label="Move navigation">
+  <ul class="pager">
+    <li class="previous <%= 'disabled' if @move.previous.nil? %>">
+      <%= link_to(@move.previous) do %>
+        <span aria-hidden="true">&larr;</span> Previous
+      <% end %>
+    </li>
+    <li>
+      <%= link_to 'All', game_moves_path(@move.game) %>
+    </li>
+    <li class="next <%= 'disabled' if @move.next.nil? %>">
+      <%= link_to(@move.next) do %>
+        Next <span aria-hidden="true">&rarr;</span>
+      <% end %>
+    </li>
+  </ul>
+</nav>

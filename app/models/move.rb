@@ -7,6 +7,8 @@ class Move < ApplicationRecord
   before_save :normalize_notation
   after_save :update_game
 
+  scope :for_game, ->(game) { where(game: game) }
+
   validates :number, :notation, presence: true
   validates :number, numericality: { only_integer: true }
   validates :number, uniqueness: { scope: :game }
@@ -28,6 +30,14 @@ class Move < ApplicationRecord
 
   def board
     game.board_for self
+  end
+
+  def next
+    self.class.where("game_id = ? AND number > ?", game_id, number).order(number: :asc).first
+  end
+
+  def previous
+    self.class.where("game_id = ? AND number < ?", game_id, number).order(number: :asc).last
   end
 
   private

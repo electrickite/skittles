@@ -1,5 +1,3 @@
 <%- content_for(:title) { "New move" } -%>
 
 <%= render 'form', move: @move, game: @game %>
-
-<%= render 'breadcrumb', links: [['Games', games_path], [@game, @game], 'New move'] %>

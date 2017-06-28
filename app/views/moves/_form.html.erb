@@ -8,4 +8,10 @@
     include_blank: false, collection: Player.for_game_user(@game, current_user), label: 'Color' %>
   <%= f.input :notation %>
   <%= f.button :submit, 'Save' %>
+
+  <%- if local_assigns[:game] -%>
+    <%= link_to 'Cancel', game, class: 'btn btn-link' %>
+  <%- else -%>
+    <%= link_to 'Cancel', move, class: 'btn btn-link' %>
+  <%- end -%>
 <% end %>

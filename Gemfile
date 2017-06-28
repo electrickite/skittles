@@ -23,11 +23,10 @@ gem 'bootstrap-sass'
 gem 'simple_form'
 gem 'active_link_to'
 gem 'cancancan', '~> 2.0'
+gem 'redis', '~> 3.0'
 
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
-# Use Redis adapter to run Action Cable in production
-# gem 'redis', '~> 3.0'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 

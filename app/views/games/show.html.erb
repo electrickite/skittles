@@ -36,9 +36,9 @@
   <span class="completed_at-js"><%= @game.completed_at %></span>
 </p>
 
-<%- if can?(:new, @move) || can?(:update, @game) -%>
+<%- if can?(:play, @game) || can?(:update, @game) -%>
   <p>
     <strong>Actions:</strong>
-    <%= game_action_links @game, @move %>
+    <%= game_action_links @game %>
   </p>
 <%- end -%>

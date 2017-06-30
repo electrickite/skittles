@@ -2,6 +2,7 @@ function Game(el) {
   this.el = $(el);
   this.board;
   this.type = this.el.data('type');
+  this.active = this.el.data('active');
   this.id = this.el.data('id');
   this.locked = false;
   this.speed = 200;
@@ -15,7 +16,7 @@ Game.prototype.colorMap = { w: 'white', b: 'black' };
 Game.prototype.theme = '/images/chesspieces/default/{piece}.png';
 
 Game.prototype.initBoard = function(fen, result) {
-  if (this.type == 'game') {
+  if (this.type == 'game' && this.active) {
     var opts = {
       position: fen,
       draggable: this.ongoing(result),

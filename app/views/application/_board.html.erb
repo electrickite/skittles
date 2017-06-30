@@ -1,4 +1,4 @@
-<div id="board" data-type="<%= board.class.name.downcase %>" data-id="<%= board.id %>" <% if board.is_a? Game %>data-white="<%= board.white_player.id %>" data-black="<%= board.black_player.id %>"<% end %> style="width: 400px" class="gameboard">
+<div id="board" data-type="<%= board.class.name.downcase %>" data-id="<%= board.id %>" <% if board.is_a? Game %>data-white="<%= board.white_player.id %>" data-black="<%= board.black_player.id %>"<% end %> <% if can? :play, board %>data-active="1"<% end %> style="width: 400px" class="gameboard">
   <div class="chessboard-63f37">
     <div class="board-b72b1" style="width: 392px;">
       <%- (1..8).reverse_each do |row| -%>

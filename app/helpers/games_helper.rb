@@ -7,10 +7,10 @@ module GamesHelper
     end
   end
 
-  def game_action_links(game, move)
+  def game_action_links(game)
     links = []
-    links << link_to('New move', new_game_move_path(game)) if can?(:new, move)
-    links << link_to('Edit', edit_game_path(game)) if can?(:uodate, game)
+    links << link_to('New move', new_game_move_path(game)) if can?(:play, game)
+    links << link_to('Edit', edit_game_path(game)) if can?(:update, game)
     links << link_to('Delete', game, method: :delete, data: { confirm: 'Are you sure?' }) if can?(:destroy, game)
     links.join(' | ').html_safe
   end

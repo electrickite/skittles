@@ -13,10 +13,14 @@ class Game < ApplicationRecord
   validates :result, inclusion: { in: results.keys }
   validates :players, length: { minimum: 2, maximum: 2 }
 
-  delegate :board, :over?, :status, :active_player, to: :game
+  delegate :board, :over?, :status, to: :game
 
   def to_s
     name || "Game #{id}"
+  end
+
+  def active_color
+    game.active_player
   end
 
   def white_player
@@ -27,8 +31,16 @@ class Game < ApplicationRecord
     players.black.take
   end
 
+  def active_player
+    self.send "#{active_color}_player"
+  end
+
   def fenstring
     board.to_fen
+  end
+
+  def ongoing?
+    !over?
   end
 
   def normalize(move)
@@ -48,13 +60,9 @@ class Game < ApplicationRecord
     @game = nil
     moves.reset
 
-    if over?
-      end_game!
-    else
-      #play_next if active_player == :black
-    end
-
+    end_game! if over?
     GameChannel.broadcast_to(self, game: self, move: current_move)
+    play_next if ongoing? && active_player.ai?
   end
 
   def board_for(move)
@@ -74,7 +82,7 @@ class Game < ApplicationRecord
   end
 
   def attributes
-    super.merge({ 'fenstring' => nil, 'num_moves' => nil, 'active_player' => nil })
+    super.merge({ 'fenstring' => nil, 'num_moves' => nil, 'active_color' => nil })
   end
 
   private
@@ -88,7 +96,7 @@ class Game < ApplicationRecord
   end
 
   def play_next
-    moves.create(game_id: id, color: active_player, notation: best_move)
+    moves.create(game_id: id, player: active_player, notation: best_move)
   end
 
   def best_move

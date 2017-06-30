@@ -2,9 +2,11 @@
 
 <%= render partial: "board", object: @game %>
 
-<p>
-  <em class="active_player-js"><%= @game.active_player.to_s.titleize %>'s move</em>
-</p>
+<%- if @game.ongoing? -%>
+  <p class="active_player-js">
+    <em><%= @game.active_color.to_s.titleize %>'s move</em>
+  </p>
+<%- end -%>
 
 <p>
   <strong>White player:</strong>

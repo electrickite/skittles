@@ -18,4 +18,8 @@ class Player < ApplicationRecord
   def titleized_color
     color.titleize
   end
+
+  def ai?
+    user.blank?
+  end
 end

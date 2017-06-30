@@ -54,36 +54,37 @@ Game.prototype.ongoing = function(result) {
 };
 
 Game.prototype.update = function(game, move) {
-  var self = this,
-      oldFen;
-
   if (this.board) {
-    oldFen = this.board.fen();
+    var self = this,
+        oldFen = this.board.fen();
+
     self.board.position(game.fenstring);
+
+    var activePlayer = game.active_color.toLowerCase().replace(/\b[a-z]/g, function(letter) {
+      return letter.toUpperCase();
+    });
+
+    $('.result-js').text(game.result);
+    $('.completed_at-js').text(game.completed_at);
+    $('.moves-js').text(game.num_moves);
+    $('.active_player-js em').text(activePlayer + "'s move");
+
+    if (move && move.fenstring.split(' ')[0] != oldFen) {
+      setTimeout(function() {
+        if (move.checkmate) {
+          $('.active_player-js').remove();
+          alert('Checkmate!');
+        } else if (move.check) {
+          alert('Check!');
+        }
+      }, self.speed);
+    }
+
+    if (!game.completed_at) { this.unlock(); }
+
   } else {
     this.initBoard(game.fenstring, game.result);
   }
-
-  var activePlayer = game.active_player.toLowerCase().replace(/\b[a-z]/g, function(letter) {
-    return letter.toUpperCase();
-  });
-
-  $('.result-js').text(game.result);
-  $('.completed_at-js').text(game.completed_at);
-  $('.moves-js').text(game.num_moves);
-  $('.active_player-js').text(activePlayer + "'s move");
-
-  if (move && move.fenstring.split(' ')[0] != oldFen) {
-    setTimeout(function() {
-      if (move.checkmate) {
-        alert('Checkmate!');
-      } else if (move.check) {
-        alert('Check!');
-      }
-    }, self.speed);
-  }
-
-  if (!game.completed_at) { this.unlock(); }
 };
 
 Game.prototype.fetch = function() {

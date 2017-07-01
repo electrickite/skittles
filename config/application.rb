@@ -1,4 +1,4 @@
-require_relative 'boot'
+require_relative 'boot'   
 
 require 'rails/all'
 
@@ -14,5 +14,18 @@ module Skittles
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
+
+    config.action_mailer.delivery_method = :smtp
+
+    if ENV['SMTP_ADDRESS']
+      config.action_mailer.smtp_settings = {
+        port:           ENV['SMTP_PORT'] || 587,
+        address:        ENV['SMTP_ADDRESS'],
+        domain:         ENV['SMTP_DOMAIN'],
+        user_name:      ENV['SMTP_USERNAME'],
+        password:       ENV['SMTP_PASSWORD'],
+        authentication: :plain,
+      }
+    end
   end
 end

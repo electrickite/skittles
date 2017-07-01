@@ -13,7 +13,13 @@ class User < ApplicationRecord
   validates :username, uniqueness: { case_sensitive: false }
   validates :username, :email, length: { maximum: 191 }
 
+  delegate :can?, :cannot?, :authorize!, to: :ability
+
   def to_s
     username
+  end
+
+  def ability
+    @ability ||= Ability.new(self)
   end
 end

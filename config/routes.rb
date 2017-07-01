@@ -9,5 +9,7 @@ Rails.application.routes.draw do
 
   resources :users, only: [:index, :show]
 
+  mount_griddler
+
   root to: "games#index"
 end

@@ -62,7 +62,7 @@ class Game < ApplicationRecord
 
     end_game! if over?
     GameChannel.broadcast_to(self, game: self, move: current_move)
-    play_next if ongoing? && active_player.ai?
+    play(best_move) if ongoing? && active_player.ai?
   end
 
   def board_for(move)
@@ -81,6 +81,14 @@ class Game < ApplicationRecord
     moves.count
   end
 
+  def play(notation)
+    build_next_move(notation).save!
+  end
+
+  def build_next_move(notation)
+    moves.build(player: active_player, notation: notation)
+  end
+
   def attributes
     super.merge({ 'fenstring' => nil, 'num_moves' => nil, 'active_color' => nil })
   end
@@ -93,10 +101,6 @@ class Game < ApplicationRecord
 
   def engine
     @engine ||= Stockfish::Engine.new(Rails.configuration.x.engine_path)
-  end
-
-  def play_next
-    moves.create(game_id: id, player: active_player, notation: best_move)
   end
 
   def best_move

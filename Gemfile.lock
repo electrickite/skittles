@@ -98,6 +98,12 @@ GEM
     ffi (1.9.18)
     globalid (0.4.0)
       activesupport (>= 4.2.0)
+    griddler (1.4.0)
+      htmlentities
+      rails (>= 3.2.0)
+    griddler-mailgun (1.0.3)
+      griddler
+    htmlentities (4.3.4)
     i18n (0.8.4)
     jbuilder (2.7.0)
       activesupport (>= 4.2.0)
@@ -241,6 +247,8 @@ DEPENDENCIES
   chess
   devise
   dotenv-rails
+  griddler
+  griddler-mailgun
   jbuilder (~> 2.5)
   jquery-rails
   js-routes

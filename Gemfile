@@ -26,6 +26,7 @@ gem 'cancancan', '~> 2.0'
 gem 'redis', '~> 3.0'
 gem 'griddler'
 gem 'griddler-mailgun'
+gem 'twilio-ruby'
 
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby

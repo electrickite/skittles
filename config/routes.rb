@@ -9,7 +9,8 @@ Rails.application.routes.draw do
 
   resources :users, only: [:index, :show]
 
-  mount_griddler
+  post 'messages/email' => 'griddler/emails#create'
+  post 'messages/sms' => 'sms#create'
 
   root to: "games#index"
 end

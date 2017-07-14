@@ -1,7 +1,7 @@
 class MoveMailer < ApplicationMailer 
-  def move_error(user, game, message)
+  def move_error(user, game, errors)
     @user = user
-    @message = message
+    @message = errors.join(', ')
     @game = game
 
     prefix = @game.present? ? "[Game #{game.id}] " : ''

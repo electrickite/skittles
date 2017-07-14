@@ -95,6 +95,8 @@ GEM
       railties (>= 3.2, < 5.2)
     erubi (1.6.0)
     execjs (2.7.0)
+    faraday (0.12.1)
+      multipart-post (>= 1.2, < 3)
     ffi (1.9.18)
     globalid (0.4.0)
       activesupport (>= 4.2.0)
@@ -115,6 +117,8 @@ GEM
     js-routes (1.3.3)
       railties (>= 3.2)
       sprockets-rails
+    jwt (1.5.6)
+    libxml-ruby (3.0.0)
     listen (3.1.5)
       rb-fsevent (~> 0.9, >= 0.9.4)
       rb-inotify (~> 0.9, >= 0.9.7)
@@ -130,6 +134,7 @@ GEM
     mini_portile2 (2.2.0)
     minitest (5.10.2)
     multi_json (1.12.1)
+    multipart-post (2.0.0)
     mysql2 (0.4.6)
     net-scp (1.2.1)
       net-ssh (>= 2.6.5)
@@ -213,6 +218,10 @@ GEM
     turbolinks (5.0.1)
       turbolinks-source (~> 5)
     turbolinks-source (5.0.3)
+    twilio-ruby (5.0.0)
+      faraday (~> 0.9)
+      jwt (~> 1.5)
+      libxml-ruby (= 3.0.0)
     tzinfo (1.2.3)
       thread_safe (~> 0.1)
     uglifier (3.2.0)
@@ -265,6 +274,7 @@ DEPENDENCIES
   sqlite3
   stockfish
   turbolinks (~> 5)
+  twilio-ruby
   tzinfo-data
   uglifier (>= 1.3.0)
   web-console (>= 3.3.0)

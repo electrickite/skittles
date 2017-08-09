@@ -17,6 +17,6 @@ class EmailProcessor < MessageProcessor
   end
 
   def send_errors
-    MoveMailer.move_error(user, game, errors).deliver_later if user
+    GameMailer.move_error(user, game, errors).deliver_later if user
   end
 end

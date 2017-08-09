@@ -2,8 +2,11 @@ class Game < ApplicationRecord
   RESULT_MAP = { '1-0' => 'white_win', '0-1' => 'black_win', '1/2-1/2' => 'draw', '*' => 'other'}.freeze
 
   has_many :players, dependent: :destroy
+  has_many :human_players, -> { where.not user: nil }, class_name: 'Player'
   belongs_to :owner, class_name: 'User', inverse_of: :owned_games, optional: true
   has_many :moves, -> { order 'number ASC' }, dependent: :destroy
+
+  after_create :send_new_game_notification
 
   accepts_nested_attributes_for :players
 
@@ -17,6 +20,10 @@ class Game < ApplicationRecord
 
   def to_s
     name || "Game #{id}"
+  end
+
+  def to_pos
+    board.to_s.gsub(/\e\[(\d+)m/, '')
   end
 
   def active_color
@@ -33,6 +40,18 @@ class Game < ApplicationRecord
 
   def active_player
     self.send "#{active_color}_player"
+  end
+
+  def winner
+    if white_win?
+      white_player
+    elsif black_win?
+      black_player
+    end
+  end
+
+  def watchers
+    (human_players.map {|p| p.user} << owner).uniq
   end
 
   def fenstring
@@ -61,7 +80,7 @@ class Game < ApplicationRecord
     moves.reset
 
     end_game! if over?
-    GameChannel.broadcast_to(self, game: self, move: current_move)
+    send_updates
     play(best_move) if ongoing? && active_player.ai?
   end
 
@@ -110,5 +129,15 @@ class Game < ApplicationRecord
 
   def end_game!
     update result: RESULT_MAP[game.result], completed_at: Time.zone.now
+  end
+
+  def send_new_game_notification
+    NotificationService.new(self).new_game
+  end
+
+  def send_updates
+    GameChannel.broadcast_to(self, game: self, move: current_move)
+    NotificationService.new(self).new_move
+    NotificationService.new(self).game_over if over?
   end
 end

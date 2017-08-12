@@ -29,5 +29,12 @@ class Ability
     can :create, Move, player: { user_id: user.id }
 
     can :destroy, User, id: user.id
+
+    can :play_via, :sms if user.play_methods.include?('sms')
+    can :play_via, :email if user.play_methods.include?('email')
+
+    can :play_using_token, String do |token|
+      user.play_token == token
+    end
   end
 end

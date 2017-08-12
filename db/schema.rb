@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170809025324) do
+ActiveRecord::Schema.define(version: 20170809122624) do
 
   create_table "games", force: :cascade do |t|
     t.string "name"
@@ -67,6 +67,8 @@ ActiveRecord::Schema.define(version: 20170809025324) do
     t.datetime "updated_at", null: false
     t.string "phone"
     t.text "notification_preference"
+    t.text "play_methods"
+    t.string "play_token"
     t.index ["phone"], name: "index_users_on_phone"
   end
 

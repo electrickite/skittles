@@ -11,14 +11,13 @@ class MessageProcessor
     @game = Game.find game_id
     move = game.build_next_move notation
 
-    if user.cannot? :create, move
-      log_error "User #{user.id} is not authorized to create moves for #{game.active_color} in game #{game.id}"
-      add_error "You are not authorized to create moves for #{game.active_color} in game #{game.id}"
-    else
-      unless move.save
-        log_error "Could not create specified move for game #{game.id}. Errors were: #{move.errors.values.join(', ')}"
-        add_error "Could not create specified move. Errors were: #{move.errors.values.join(', ')}"
-      end
+    user.authorize! :play_via, message_type
+    user.authorize! :play_using_token, token
+    user.authorize! :create, move
+
+    unless move.save
+      log_error "Could not create specified move for game #{game.id}. Errors were: #{move.errors.values.join(', ')}"
+      add_error "Could not create specified move. Errors were: #{move.errors.values.join(', ')}"
     end
 
   rescue ActiveRecord::RecordNotFound
@@ -29,6 +28,10 @@ class MessageProcessor
       log_error "Could not find user with #{user_conditions}"
       add_error "Your user account could not be located."
     end
+
+  rescue CanCan::AccessDenied
+    log_error "The user is not authorized to play becuase of message type, token, or ability."
+    add_error "You are not allowed to play the game as requested."
 
   rescue => e
     log_error "There was an error parsing the message: #{e.class} - #{e}"
@@ -41,12 +44,23 @@ class MessageProcessor
   private
 
   def game_id
+    # Implement in subclass
   end
 
   def user_conditions
+    # Implement in subclass
   end
 
   def notation
+    # Implement in subclass
+  end
+
+  def token
+    # Implement in subclass
+  end
+
+  def send_errors
+    # Implement in subclass (optional)
   end
 
   def log_error(error_message)
@@ -57,10 +71,8 @@ class MessageProcessor
     @errors << error_message
   end
 
-  def send_errors
-  end
-
-  def is_number?(value)
-    value.to_s == value.to_i.to_s
+  def message_type
+    # Get message type from class name
+    self.class.name.titleize.split(' ').first.downcase.to_sym
   end
 end

@@ -1,4 +1,6 @@
 class SmsProcessor < MessageProcessor
+  METHOD = 'sms'.freeze
+
   private
 
   def game_id
@@ -10,7 +12,11 @@ class SmsProcessor < MessageProcessor
   end
 
   def notation
-    body[1]
+    body[2] || body[1]
+  end
+
+  def token
+    body[2] ? body[1] : ''
   end
 
   def body

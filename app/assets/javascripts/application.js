@@ -16,6 +16,7 @@
 //= require rails-ujs
 //= require turbolinks
 //= require chessboard
+//= require bootstrap-show-password
 //= require_tree .
 
 $(document).on('turbolinks:load', function() {

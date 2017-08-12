@@ -4,7 +4,8 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable, :confirmable, :recoverable,
          :rememberable, :trackable, :validatable
 
-  before_save :clean_notification_preference
+  before_save :clean_serialized_arrays
+  before_save :null_play_token
 
   has_many :players, dependent: :nullify
   has_many :games, through: :players
@@ -12,6 +13,7 @@ class User < ApplicationRecord
   has_many :moves, through: :players, inverse_of: :user
 
   serialize :notification_preference, Array
+  serialize :play_methods, Array
 
   validates :username, presence: true
   validates :username, uniqueness: { case_sensitive: false }
@@ -37,7 +39,12 @@ class User < ApplicationRecord
 
   private
 
-  def clean_notification_preference
+  def clean_serialized_arrays
     notification_preference.reject! { |p| p.blank? }
+    play_methods.reject! { |m| m.blank? }
+  end
+
+  def null_play_token
+    play_token = nil if play_token.blank?
   end
 end

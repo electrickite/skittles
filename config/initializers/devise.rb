@@ -290,7 +290,7 @@ module DevisePermittedParameters
     devise_parameter_sanitizer.permit(:sign_up, keys: [:email])
 
     # Prevent username from being edited
-    devise_parameter_sanitizer.permit(:account_update, keys: [:email, :phone, notification_preference: []], except: [:username])
+    devise_parameter_sanitizer.permit(:account_update, keys: [:email, :phone, :play_token, notification_preference: [], play_methods: []], except: [:username])
   end
 end
 

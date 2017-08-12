@@ -12,6 +12,11 @@
 
     <%= f.input :phone %>
     <%= f.input :notification_preference, as: :check_boxes, collection: [['Email', 'email'], ['SMS', 'sms']] %>
+    <%= f.input :play_methods, as: :check_boxes, collection: [['Email', 'email'], ['SMS', 'sms']] %>
+
+    <%= f.input :play_token, wrapper: :vertical_input_group do %>
+      <%= f.password_field :play_token, value: resource.play_token, class: "form-control" %>
+    <% end %>
 
     <%= f.input :password, autocomplete: "off", hint: "leave it blank if you don't want to change it", required: false %>
     <%= f.input :password_confirmation, required: false %>

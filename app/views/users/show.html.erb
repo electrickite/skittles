@@ -1,6 +1,33 @@
 <%- content_for(:title) { @user.username } -%>
 
-<p>
-  <strong>Email:</strong>
-  <%= @user.email %>
-</p>
+<h2>Games</h2>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>White</th>
+      <th>Black</th>
+      <th>Started</th>
+      <th>Completed</th>
+      <th>Result</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <%- if @user.games.each do |game| -%>
+      <tr>
+        <td><%= link_to game.name, game %></td>
+        <td><%= player_link game.white_player %></td>
+        <td><%= player_link game.black_player %></td>
+        <td><%= game.created_at %></td>
+        <td><%= game.completed_at %></td>
+        <td><%= game.result.titleize %></td>
+      </tr>
+    <%- end.empty? -%>
+      <tr>
+        <td colspan="9"><%= @user.username %> is not playing any games.</td>
+      </tr>
+    <%- end -%>
+  </tbody>
+</table>

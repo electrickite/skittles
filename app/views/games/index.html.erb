@@ -20,7 +20,7 @@
         <td><%= player_link game.black_player %></td>
         <td><%= game.created_at %></td>
         <td><%= game.completed_at %></td>
-        <td><%= game.result %></td>
+        <td><%= game.result.titleize %></td>
       </tr>
     <%- end.empty? -%>
       <tr>

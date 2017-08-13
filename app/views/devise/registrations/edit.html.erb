@@ -11,8 +11,8 @@
     <% end %>
 
     <%= f.input :phone %>
-    <%= f.input :notification_preference, as: :check_boxes, collection: [['Email', 'email'], ['SMS', 'sms']] %>
-    <%= f.input :play_methods, as: :check_boxes, collection: [['Email', 'email'], ['SMS', 'sms']] %>
+    <%= f.input :notification_preference, as: :check_boxes, collection: User::NOTIFICATION_METHODS.map(&:titleize) %>
+    <%= f.input :play_methods, as: :check_boxes, collection: User::PLAY_METHODS.map(&:titleize)  %>
 
     <%= f.input :play_token, wrapper: :vertical_input_group do %>
       <%= f.password_field :play_token, value: resource.play_token, class: "form-control" %>

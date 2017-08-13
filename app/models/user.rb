@@ -1,4 +1,7 @@
 class User < ApplicationRecord
+  NOTIFICATION_METHODS = ['email', 'sms'].freeze
+  PLAY_METHODS = ['email', 'sms'].freeze
+
   # Include default devise modules. Others available are:
   # :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable, :confirmable, :recoverable,
@@ -18,6 +21,7 @@ class User < ApplicationRecord
   validates :username, presence: true
   validates :username, uniqueness: { case_sensitive: false }
   validates :username, :email, length: { maximum: 191 }
+  validate :play_methods_allowed, :notification_preferences_allowed
 
   delegate :can?, :cannot?, :authorize!, to: :ability
 
@@ -46,5 +50,17 @@ class User < ApplicationRecord
 
   def null_play_token
     play_token = nil if play_token.blank?
+  end
+
+  def play_methods_allowed
+    (play_methods - PLAY_METHODS).each do |method|
+      errors.add(:play_methods, "#{method} is not a valid play method")
+    end
+  end
+
+  def notification_preferences_allowed
+    (notification_preference - NOTIFICATION_METHODS).each do |method|
+      errors.add(:notification_preference, "#{method} is not a valid notification method")
+    end
   end
 end

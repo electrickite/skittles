@@ -1,4 +1,4 @@
-<%- content_for(:title) { "Edit account details" } -%>
+<%- content_for(:title) { "Account" } -%>
 
 <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
   <%= f.error_notification %>
@@ -11,12 +11,6 @@
     <% end %>
 
     <%= f.input :phone %>
-    <%= f.input :notification_preference, as: :check_boxes, collection: User::NOTIFICATION_METHODS.map(&:titleize) %>
-    <%= f.input :play_methods, as: :check_boxes, collection: User::PLAY_METHODS.map(&:titleize)  %>
-
-    <%= f.input :play_token, wrapper: :vertical_input_group do %>
-      <%= f.password_field :play_token, value: resource.play_token, class: "form-control" %>
-    <% end %>
 
     <%= f.input :password, autocomplete: "off", hint: "leave it blank if you don't want to change it", required: false %>
     <%= f.input :password_confirmation, required: false %>

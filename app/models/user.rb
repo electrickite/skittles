@@ -7,7 +7,7 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable, :confirmable, :recoverable,
          :rememberable, :trackable, :validatable
 
-  before_save :clean_serialized_arrays
+  before_validation :clean_serialized_arrays
   before_save :null_play_token
 
   has_many :players, dependent: :nullify
@@ -24,6 +24,16 @@ class User < ApplicationRecord
   validate :play_methods_allowed, :notification_preferences_allowed
 
   delegate :can?, :cannot?, :authorize!, to: :ability
+
+  class << self
+    def notification_methods_select
+      NOTIFICATION_METHODS.map { |m| [m.titleize, m] }
+    end
+
+    def play_methods_select
+      PLAY_METHODS.map { |m| [m.titleize, m] }
+    end
+  end
 
   def to_s
     username

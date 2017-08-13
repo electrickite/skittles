@@ -7,7 +7,7 @@ Rails.application.routes.draw do
     resources :moves, shallow: true
   end
 
-  resources :users, only: [:index, :show]
+  resources :users, only: [:index, :show, :edit, :update]
 
   post 'messages/email' => 'griddler/emails#create'
   post 'messages/sms' => 'sms#create'

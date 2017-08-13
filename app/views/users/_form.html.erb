@@ -1,0 +1,11 @@
+<%= simple_form_for user do |f| %>
+  <%= f.input :notification_preference, as: :check_boxes, collection: User.notification_methods_select %>
+  <%= f.input :play_methods, as: :check_boxes, collection: User.play_methods_select  %>
+
+  <%= f.input :play_token, wrapper: :vertical_input_group do %>
+    <%= f.password_field :play_token, value: user.play_token, class: "form-control" %>
+  <% end %>
+
+  <%= f.button :submit, 'Save' %>
+  <%= link_to 'Cancel', user, class: 'btn btn-link' %>
+<% end %>

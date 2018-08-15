@@ -2,5 +2,5 @@ set :repo_url, 'git@example.com:example/reciput.git'
 server 'example.com', user: 'deploy', roles: %w{app db web}
 set :deploy_to, '/var/www/skittles'
 
-#set :chruby_ruby, 'ruby-2.4.1'
-#set :bundle_without, %w{development test postgres}.join(' ') 
+#set :chruby_ruby, 'ruby-2.4.4'
+#set :bundle_without, %w{development test postgres}.join(' ')

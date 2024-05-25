@@ -1,0 +1,14 @@
+{
+    "name": "electrickite/skittles",
+    "description": "Play chess with friends over messaging and chat",
+    "type": "project",
+    "license": "MIT",
+    "require": {
+        "php": "^8.1",
+        "ext-gd": "*",
+        "chesslablab/php-chess": "^1.4"
+    },
+    "scripts": {
+        "start": "php -S localhost:8080 -t public"
+    }
+}

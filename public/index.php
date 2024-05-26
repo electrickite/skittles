@@ -23,7 +23,7 @@
     <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="<?= $base_url; ?>/img/chess-icon.png">
     <link rel="stylesheet" href="css/simple.min.css">
     <link rel="stylesheet" href="css/chessboard-1.0.0.min.css">
-    <link rel="stylesheet" href="css/style.css?v=4">
+    <link rel="stylesheet" href="css/style.css?v=5">
   </head>
   <body>
     <main>

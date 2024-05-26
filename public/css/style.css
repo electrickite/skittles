@@ -1,10 +1,13 @@
 body {
   grid-template-columns: none;
+  display: block;
 }
 
 main {
   padding-top: 0;
-  max-width: 390px;
+  max-width: 380px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .center {

@@ -55,9 +55,7 @@ function onDrop(source, target) {
   });
 
   if (move == null) return 'snapback';
-  removeRedSquares();
-  updateStatus();
-  updateUrl();
+  updateUI();
 }
 
 function onSnapEnd() {
@@ -91,6 +89,12 @@ function onMouseoverSquare(square, piece) {
 
 function onMouseoutSquare(square, piece) {
   removeGreySquares();
+}
+
+function updateUI() {
+  removeRedSquares();
+  updateStatus();
+  updateUrl();
 }
 
 function updateStatus() {
@@ -144,7 +148,6 @@ function getMoveText() {
   const move = lastMove();
   let text = null;
   if (move) {
-    console.log(move)
     if (move.flags.includes('k') || move.flags.includes('q')) {
       text = `${colors[move.color]} ${flags[move.flags]}`;
     } else if (move.flags.includes('p') && move.flags.includes('c')) {
@@ -269,12 +272,26 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
+  document.getElementById('undo').addEventListener('click', () => {
+    if (game.undo()) {
+      updateUI();
+      board.position(game.fen());
+    } else {
+      alert('Cannot undo!');
+    }
+    if (game.history().length == 0) {
+      moveStatus.textContent = '--';
+    }
+  });
+
   document.getElementById('reset').addEventListener('click', () => {
-    board.start(false);
-    game.reset();
-    removeRedSquares();
-    updateUrl(window.location.pathname);
-    updateStatus();
+    if (window.confirm('Are you sure you want to reset the board?')) {
+      board.start(false);
+      game.reset();
+      removeRedSquares();
+      updateUrl(window.location.pathname);
+      updateStatus();
+    }
   });
 
   chessboard.addEventListener('touchmove', (e) => {

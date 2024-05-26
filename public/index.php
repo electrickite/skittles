@@ -31,6 +31,7 @@
         <div id="chessboard" class="chessboard"></div>
         <div>
           <button id="copy">Copy</button>
+          <button id="undo">Undo</button>
           <button id="reset">Reset</button>
         </div>
       </div>

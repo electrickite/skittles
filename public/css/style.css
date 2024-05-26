@@ -14,8 +14,11 @@ main {
   flex-flow: column;
 }
 
-div button:first-child {
+div button {
   margin-right: 16px;
+}
+div button:last-child {
+  margin-right: 0;
 }
 
 dl, details {

@@ -51,7 +51,7 @@ function onDrop(source, target) {
   let move = game.move({
     from: source,
     to: target,
-    promotion: 'q' // always promote to queen
+    promotion: document.getElementById('promote').value
   });
 
   if (move == null) return 'snapback';

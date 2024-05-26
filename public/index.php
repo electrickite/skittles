@@ -23,7 +23,7 @@
     <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="<?= $base_url; ?>/img/chess-icon.png">
     <link rel="stylesheet" href="css/simple.min.css">
     <link rel="stylesheet" href="css/chessboard-1.0.0.min.css">
-    <link rel="stylesheet" href="css/style.css?v=3">
+    <link rel="stylesheet" href="css/style.css?v=4">
   </head>
   <body>
     <main>
@@ -33,17 +33,27 @@
           <button id="copy">Copy</button>
           <button id="reset">Reset</button>
         </div>
-        <dl class="notice">
-          <dt>Status:</dt>
-          <dd id="status"></dd>
-          <dt>Last move:</dt>
-          <dd id="move"></dd>
-        </dl>
       </div>
+      <dl class="notice">
+        <dt>Status:</dt>
+        <dd id="status"></dd>
+        <dt>Last move:</dt>
+        <dd id="move"></dd>
+      </dl>
+      <details>
+        <summary>Options</summary>
+        <label for="promote">Promote to:</label>
+        <select id="promote">
+          <option value="q">Queen</option>
+          <option value="r">Rook</option>
+          <option value="n">Knight</option>
+          <option value="b">Bishop</option>
+        </select>
+      </details>
     </main>
 
     <script src="js/jquery-3.7.1.min.js" charset="utf-8"></script>
     <script src="js/chessboard-1.0.0.min.js" charset="utf-8"></script>
-    <script src="js/main.js?v=3" type="module" charset="utf-8"></script>
+    <script src="js/main.js?v=4" type="module" charset="utf-8"></script>
   </body>
 </html>
